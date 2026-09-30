@@ -1,0 +1,311 @@
+/* Track page — every selector is scoped to .pg-track (sheets carry it too). */
+
+.pg-track .trk-body { display: flex; flex-direction: column; gap: 14px; }
+
+/* ---- lock / future note --------------------------------------------------- */
+.pg-track .trk-note { animation: slide-up 0.24s ease; }
+.pg-track .trk-note > svg { flex: none; color: var(--text-3); }
+.pg-track .trk-note-link {
+  flex: none; min-height: 40px; padding: 0 4px;
+  font-size: 13px; font-weight: 700; color: var(--brand);
+}
+
+/* ---- day strip ------------------------------------------------------------ */
+.pg-track .trk-days {
+  position: relative; /* offsetLeft of chips is measured against this */
+  gap: 8px;
+  padding: 12px var(--gutter) 8px;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  align-items: center;
+}
+.pg-track .trk-day,
+.pg-track .trk-older {
+  position: relative;
+  width: 56px; height: 76px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  transition: transform 0.14s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.pg-track .trk-day:active,
+.pg-track .trk-older:active { transform: scale(0.94); }
+
+.pg-track .trk-older {
+  background: transparent;
+  border: 1px dashed var(--line-2);
+  color: var(--text-3);
+  font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.pg-track .trk-older-lock { font-size: 16px; line-height: 1; filter: grayscale(0.4); }
+
+.pg-track .trk-day .wd { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.pg-track .trk-day .dn { font: 800 22px/1 var(--font-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--text); }
+.pg-track .trk-day .dots { display: flex; gap: 3px; height: 5px; }
+.pg-track .trk-day .dots i { display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--cat, var(--brand)); }
+
+.pg-track .trk-day .rel {
+  position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+  padding: 2px 7px; border-radius: var(--r-pill);
+  background: var(--surface-3); color: var(--text-2);
+  font-size: 9px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 0 0 2px var(--bg);
+}
+
+.pg-track .trk-day.is-today {
+  background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--grad-brand) border-box;
+  border: 1.5px solid transparent;
+}
+.pg-track .trk-day.is-today .rel { background: var(--grad-brand); color: #fff; }
+
+.pg-track .trk-day.is-sel {
+  background: var(--text);
+  border: 1.5px solid var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 4px rgba(255, 255, 255, 0.06);
+}
+.pg-track .trk-day.is-sel:active { transform: translateY(-2px) scale(0.95); }
+.pg-track .trk-day.is-sel .wd { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+.pg-track .trk-day.is-sel .dn { color: var(--bg); }
+
+/* the night your live session counts toward */
+.pg-track .trk-day.is-session::after {
+  content: ''; position: absolute; top: 6px; right: 6px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #ef4444; animation: pulse 1.6s infinite;
+}
+
+.pg-track .trk-sep { width: 1px; height: 44px; background: var(--line-2); border-radius: 1px; margin: 0 1px; }
+
+/* ---- banners -------------------------------------------------------------- */
+.pg-track .trk-banner { align-items: flex-start; animation: fade-in 0.25s ease; }
+.pg-track .trk-banner-icon {
+  flex: none; width: 34px; height: 34px; border-radius: 11px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 17px; line-height: 1;
+  color: var(--text);
+}
+.pg-track .trk-banner-title { font-weight: 700; font-size: 14px; line-height: 1.3; }
+.pg-track .trk-banner-sub { margin-top: 3px; font-size: 12.5px; color: var(--text-2); }
+.pg-track .trk-banner-sub .num { color: var(--text); }
+.pg-track .trk-cook {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(236, 72, 153, 0.12));
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+/* ---- session cards ---------------------------------------------------------- */
+.pg-track .trk-go { padding: 18px; }
+.pg-track .trk-go-top { display: flex; align-items: flex-start; gap: 14px; }
+.pg-track .trk-go-emoji {
+  flex: none; width: 48px; height: 48px; border-radius: 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.08); font-size: 26px;
+  animation: float 3.2s ease-in-out infinite;
+}
+.pg-track .trk-go-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin-top: 16px; }
+.pg-track .trk-go-loc {
+  min-height: 40px; padding: 0 2px;
+  font-size: 12.5px; font-weight: 600; color: var(--text-2);
+  text-align: left; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px;
+}
+
+.pg-track .trk-live { display: block; width: 100%; text-align: left; padding: 16px 18px; }
+.pg-track .trk-live-top { display: flex; align-items: center; justify-content: space-between; color: var(--text-3); }
+.pg-track .trk-live-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text);
+}
+.pg-track .trk-live-row { display: flex; align-items: flex-end; gap: 14px; margin-top: 10px; }
+.pg-track .trk-live-time { font: 800 38px/1 var(--font-display); letter-spacing: -0.03em; }
+.pg-track .trk-live-meta { min-width: 0; padding-bottom: 2px; }
+
+/* ---- first-run hint --------------------------------------------------------- */
+.pg-track .trk-hint {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--r);
+  border: 1px dashed var(--line-2);
+  background: color-mix(in srgb, var(--brand) 8%, transparent);
+}
+.pg-track .trk-hint-emoji { font-size: 26px; flex: none; animation: float 2.4s ease-in-out infinite; }
+
+/* ---- groups & category cards ------------------------------------------------------ */
+.pg-track .trk-groups { display: flex; flex-direction: column; gap: 18px; margin-top: 4px; }
+.pg-track .trk-groups.trk-in-fwd { animation: trk-in-fwd 0.26s cubic-bezier(.2, .8, .2, 1); }
+.pg-track .trk-groups.trk-in-back { animation: trk-in-back 0.26s cubic-bezier(.2, .8, .2, 1); }
+.pg-track .trk-group-head { margin: 0 2px 10px; }
+.pg-track .trk-cards { display: flex; flex-direction: column; gap: 10px; }
+
+.pg-track .trk-cat {
+  position: relative;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 12px 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.pg-track .trk-cat.on {
+  background:
+    radial-gradient(140% 90% at 0% 0%, color-mix(in srgb, var(--cat) 15%, transparent) 0%, transparent 60%),
+    var(--surface);
+  border-color: color-mix(in srgb, var(--cat) 34%, transparent);
+}
+.pg-track .trk-cat-label { font: 700 16px/1.2 var(--font-display); }
+.pg-track .trk-cat-sub { margin-top: 2px; font-size: 12px; color: var(--text-3); }
+.pg-track .trk-cat.on .trk-cat-sub { color: color-mix(in srgb, var(--cat) 70%, var(--text-2)); }
+
+/* drinks: header + one row per drink type */
+.pg-track .trk-drinks { display: block; padding: 14px 12px 6px 14px; }
+.pg-track .trk-drinks-head { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; }
+.pg-track .trk-drinks-total { flex: none; min-width: 56px; padding-right: 4px; text-align: right; }
+.pg-track .trk-drinks-total .v {
+  display: inline-block;
+  font: 800 36px/1 var(--font-display); letter-spacing: -0.03em;
+  color: var(--cat);
+}
+.pg-track .trk-drinks-total.zero .v { color: var(--text-3); }
+.pg-track .trk-drinks-total .unit {
+  display: block; margin-top: 3px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3);
+}
+.pg-track .trk-sub {
+  display: flex; align-items: center; gap: 10px;
+  min-height: 52px; padding: 4px 0;
+  border-top: 1px solid var(--line);
+}
+.pg-track .trk-sub-emoji {
+  flex: none; width: 32px; height: 32px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-2); font-size: 17px;
+  transition: background 0.2s ease;
+}
+.pg-track .trk-sub.on .trk-sub-emoji { background: color-mix(in srgb, var(--cat) 18%, transparent); }
+.pg-track .trk-sub-label { font-weight: 600; font-size: 15px; color: var(--text-2); }
+.pg-track .trk-sub.on .trk-sub-label { color: var(--text); }
+
+/* ---- stepper (− count +) ---------------------------------------------------------- */
+.pg-track .trk-step { flex: none; display: flex; align-items: center; gap: 4px; }
+.pg-track .trk-btn {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-3); color: var(--text);
+  transition: transform 0.08s ease, background 0.15s ease, opacity 0.15s ease;
+  touch-action: manipulation;
+}
+.pg-track .trk-btn:active { transform: scale(0.86); }
+.pg-track .trk-btn:disabled { opacity: 0.28; pointer-events: none; }
+.pg-track .trk-btn.plus {
+  width: 48px; height: 48px;
+  background: var(--cat, var(--brand)); color: var(--bg);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--cat, var(--brand)) 32%, transparent);
+}
+.pg-track .trk-btn.plus:active { transform: scale(0.88); filter: brightness(1.12); }
+.pg-track .trk-count {
+  position: relative;
+  min-width: 44px; height: 44px; padding: 0 4px;
+  border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font: 800 26px/1 var(--font-display); letter-spacing: -0.02em;
+  color: var(--text);
+  transition: background 0.15s ease;
+  touch-action: manipulation;
+}
+.pg-track .trk-count:active { background: var(--surface-2); }
+.pg-track .trk-count.zero { color: var(--text-3); }
+.pg-track .trk-count .v,
+.pg-track .trk-drinks-total .v { display: inline-block; will-change: transform; }
+.pg-track .v.bump { animation: trk-bump 0.34s cubic-bezier(.3, .7, .3, 1.5); }
+.pg-track .v.dip { animation: trk-dip 0.26s ease; }
+.pg-track .trk-count .fly {
+  position: absolute; left: 50%; top: -2px;
+  font: 800 14px/1 var(--font-display); color: var(--cat, var(--brand));
+  pointer-events: none; opacity: 0;
+  animation: trk-fly 0.75s ease-out forwards;
+}
+
+.pg-track .trk-step.sm .trk-btn.plus { width: 40px; height: 40px; box-shadow: none; }
+.pg-track .trk-step.sm .trk-count { min-width: 38px; height: 40px; font-size: 20px; }
+
+/* ---- footer ------------------------------------------------------------------------ */
+.pg-track .trk-footer {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px 8px;
+  margin-top: 8px; padding: 14px 16px;
+  border-radius: var(--r);
+  background: var(--bg-2); border: 1px solid var(--line);
+  font-size: 14px; color: var(--text-2); text-align: center;
+}
+.pg-track .trk-footer b { color: var(--text); font-weight: 800; }
+.pg-track .trk-dotsep { color: var(--text-3); }
+.pg-track .trk-hush { text-align: center; font-size: 12.5px; color: var(--text-3); padding: 0 12px; }
+
+/* ---- sheets (rendered outside the page, so they carry .pg-track themselves) ------------ */
+.pg-track.trk-sheet { padding-top: 2px; }
+.pg-track.trk-sheet .trk-sheet-head { display: flex; align-items: center; gap: 14px; }
+.pg-track.trk-sheet .trk-big { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 24px 0 8px; }
+.pg-track.trk-sheet .trk-big-btn {
+  flex: none; width: 56px; height: 56px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-3); color: var(--text);
+  transition: transform 0.08s ease, opacity 0.15s ease;
+  touch-action: manipulation;
+}
+.pg-track.trk-sheet .trk-big-btn.plus { background: var(--cat, var(--brand)); color: var(--bg); }
+.pg-track.trk-sheet .trk-big-btn:active { transform: scale(0.9); }
+.pg-track.trk-sheet .trk-big-btn:disabled { opacity: 0.28; pointer-events: none; }
+.pg-track.trk-sheet .trk-big-input {
+  width: 132px; height: 92px; padding: 0;
+  text-align: center;
+  font: 800 64px/1 var(--font-display); letter-spacing: -0.03em;
+  background: var(--surface-2); color: var(--text);
+  border: 1px solid var(--line-2); border-radius: var(--r);
+  outline: none;
+  -moz-appearance: textfield; appearance: textfield;
+  transition: border-color 0.15s ease;
+}
+.pg-track.trk-sheet .trk-big-input:focus { border-color: var(--cat, var(--brand)); }
+.pg-track.trk-sheet .trk-big-input::-webkit-outer-spin-button,
+.pg-track.trk-sheet .trk-big-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.pg-track.trk-sheet .trk-sheet-was { margin-bottom: 18px; text-align: center; font-size: 13px; color: var(--text-3); }
+.pg-track.trk-sheet .trk-sheet-was b { color: var(--text); }
+
+.pg-track.trk-sheet .trk-rules { display: flex; flex-direction: column; gap: 14px; margin: 16px 0 20px; }
+.pg-track.trk-sheet .trk-rule { display: flex; align-items: flex-start; gap: 12px; }
+.pg-track.trk-sheet .trk-rule-emoji {
+  flex: none; width: 40px; height: 40px; border-radius: 13px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-2); font-size: 20px;
+}
+
+/* ---- motion ------------------------------------------------------------------------- */
+@keyframes trk-bump { 0% { transform: scale(1); } 45% { transform: scale(1.32); } 100% { transform: scale(1); } }
+@keyframes trk-dip { 0% { transform: scale(1); } 45% { transform: scale(0.78); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes trk-fly {
+  0% { opacity: 0; transform: translate(-50%, 4px) scale(0.8); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -26px) scale(1.05); }
+}
+@keyframes trk-in-fwd { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+@keyframes trk-in-back { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 350px) {
+  .pg-track .trk-btn.plus { width: 42px; height: 42px; }
+  .pg-track .trk-count { min-width: 36px; }
+}
+
+/* back-fill "roughly when?" picker */
+.pg-track .trk-when { margin-top: 14px; padding: 12px; }
+.pg-track .trk-when-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.pg-track .trk-when-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.pg-track .trk-when-opt {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 64px; padding: 8px 4px;
+  border-radius: var(--r-sm); background: var(--surface-2); border: 1.5px solid var(--line); color: var(--text-2);
+  transition: border-color .15s, background .15s, transform .1s;
+}
+.pg-track .trk-when-opt:active { transform: scale(.96); }
+.pg-track .trk-when-opt > span { font-size: 18px; }
+.pg-track .trk-when-opt b { font-size: 13px; color: var(--text); }
+.pg-track .trk-when-opt small { font-size: 11px; color: var(--text-3); font-weight: 600; }
+.pg-track .trk-when-opt.on { border-color: var(--brand-2); background: color-mix(in srgb, var(--brand-2) 12%, var(--surface-2)); }

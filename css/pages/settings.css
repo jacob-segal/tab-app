@@ -1,0 +1,26 @@
+/* Settings */
+.pg-settings .st-err { color: var(--bad); font-weight: 600; }
+.pg-settings .st-emojis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.pg-settings .st-emoji { height: 46px; border-radius: 14px; background: var(--surface-2); font-size: 22px; border: 2px solid transparent; }
+.pg-settings .st-emoji.on { border-color: var(--brand-2); background: var(--surface-3); }
+.pg-settings .st-hues { display: flex; justify-content: space-between; gap: 8px; }
+.pg-settings .st-hue { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(145deg, hsl(var(--hue) 85% 62%), hsl(calc(var(--hue) + 40) 80% 45%)); border: 3px solid transparent; box-shadow: 0 0 0 1px var(--line-2); }
+.pg-settings .st-hue.on { border-color: #fff; }
+.pg-settings .st-dim { opacity: .5; }
+.pg-settings .st-card-head { padding: 12px 16px 8px; }
+.pg-settings .st-spot, .pg-settings .st-action {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 50px; padding: 0 16px;
+  border-top: 1px solid var(--line); color: var(--text); text-align: left; font-weight: 600; cursor: pointer;
+}
+.pg-settings .st-action:first-child { border-top: 0; }
+.pg-settings .st-spot:active, .pg-settings .st-action:active { background: var(--surface-2); }
+.pg-settings .st-spot svg, .pg-settings .st-action svg { color: var(--text-3); flex: none; }
+.pg-settings .st-action.danger, .pg-settings .st-action.danger svg { color: var(--bad); }
+.pg-settings .st-price { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.pg-settings .st-price:last-child { border-bottom: 0; }
+.pg-settings .st-price-e { width: 26px; text-align: center; font-size: 18px; }
+.pg-settings .st-dollar { color: var(--text-3); font-weight: 700; }
+.pg-settings .st-price-input { width: 84px; height: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+.pg-settings .st-weights { display: grid; gap: 8px; }
+.pg-settings .st-weight { display: flex; align-items: center; gap: 10px; }
+.pg-settings .st-btns { display: flex; flex-wrap: wrap; gap: 8px; }

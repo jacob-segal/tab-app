@@ -1,0 +1,86 @@
+/* Live session + recap */
+.pg-session { min-height: 100dvh; display: flex; flex-direction: column; padding-bottom: calc(var(--safe-b) + 96px); }
+.pg-session .ss-top { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.pg-session .ss-live-chip { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; border-radius: 99px; background: rgba(239, 68, 68, .14); color: #fca5a5; font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+
+.pg-session .ss-start { flex: 1; padding-top: 8px; }
+.pg-session .ss-start-emoji { font-size: 64px; margin: 12px 0 14px; animation: float 4s ease-in-out infinite; }
+.pg-session .ss-point { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--line); }
+.pg-session .ss-point > span:first-child { font-size: 18px; }
+
+.pg-session .ss-cta {
+  position: fixed; z-index: 30; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 100%; max-width: var(--maxw);
+  padding: 14px var(--gutter) calc(var(--safe-b) + 14px);
+  background: linear-gradient(to top, var(--bg) 60%, transparent);
+}
+
+.pg-session .ss-stage { position: relative; }
+.pg-session .ss-stage .map { height: 300px; }
+.pg-session .ss-nomap {
+  height: 190px; border-radius: var(--r); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: var(--grad-night); border: 1px solid var(--line-2); text-align: center; padding: 16px;
+}
+.pg-session .ss-nomap > span { font-size: 40px; }
+.pg-session .ss-timer-card {
+  position: relative; z-index: 2; margin: -44px 12px 0;
+  padding: 14px 16px; border-radius: var(--r);
+  background: rgba(20, 20, 29, .94); border: 1px solid var(--line-2);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow); text-align: center;
+}
+.pg-session .ss-timer { font: 800 46px/1 var(--font-display); letter-spacing: -0.03em; }
+.pg-session .ss-gps { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--text-3); font-weight: 600; }
+.pg-session .ss-gps-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-3); }
+.pg-session .ss-gps-dot.on { background: var(--good); box-shadow: 0 0 8px var(--good); }
+
+.pg-session .ss-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+.pg-session .ss-log {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 14px 6px 12px; border-radius: var(--r);
+  background: var(--surface); border: 1px solid var(--line);
+  transition: transform .1s ease, background .15s, border-color .15s;
+}
+.pg-session .ss-log:active { transform: scale(.94); background: var(--surface-2); }
+.pg-session .ss-log.has { border-color: color-mix(in srgb, var(--cat) 45%, transparent); background: color-mix(in srgb, var(--cat) 8%, var(--surface)); }
+.pg-session .ss-count {
+  position: absolute; top: 8px; right: 8px; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 99px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cat); color: #0b0b10; font-size: 13px; font-weight: 800;
+  animation: pop .28s ease;
+}
+.pg-session .ss-emoji { width: 32px; text-align: center; font-size: 20px; }
+.ss-sheet .ss-drinks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ss-sheet .ss-drink {
+  display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 14px; border-radius: var(--r);
+  background: var(--surface-2); border: 1px solid var(--line-2); font-size: 15px;
+}
+.ss-sheet .ss-drink:active { transform: scale(.96); background: var(--surface-3); }
+.ss-sheet .ss-drink-e { font-size: 26px; }
+.ss-sheet .ss-drink:last-child:nth-child(odd) { grid-column: span 2; justify-content: center; }
+
+/* recap */
+.pg-recap .sr-hero { padding-bottom: 16px; }
+.pg-recap .sr-eyebrow { font-weight: 800; letter-spacing: .14em; opacity: .8; }
+.pg-recap .sr-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+.pg-recap .sr-stats > div { display: flex; flex-direction: column; align-items: center; padding: 10px 4px; border-radius: var(--r-sm); background: rgba(0, 0, 0, .25); min-width: 0; }
+.pg-recap .sr-stats b { font: 800 18px/1.1 var(--font-display); white-space: nowrap; }
+.pg-recap .sr-stats span { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .8; margin-top: 4px; }
+.pg-recap .sr-nomap { padding: 28px 16px; }
+.pg-recap .sr-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pg-recap .sr-cat { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.pg-recap .sr-cat > div { display: flex; flex-direction: column; min-width: 0; }
+.pg-recap .sr-cat b { font: 800 22px/1 var(--font-display); }
+.pg-recap .sr-cat span:not(.cat-icon) { font-size: 11px; color: var(--text-3); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pg-recap .sr-cat .cat-icon { width: 36px; height: 36px; font-size: 18px; border-radius: 11px; }
+.pg-recap .sr-stop { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); color: var(--text); }
+.pg-recap .sr-stop:last-child { border-bottom: 0; }
+.pg-recap .sr-stop:active { background: var(--surface-2); }
+.pg-recap .sr-stop svg { color: var(--text-3); }
+.pg-recap .sr-stop-n { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--grad-brand); color: #fff; font-weight: 800; font-size: 13px; flex: none; }
+.pg-recap .sr-timeline { padding: 8px 16px; }
+.pg-recap .sr-tl { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+.pg-recap .sr-tl:last-child { border-bottom: 0; }
+.pg-recap .sr-tl-time { width: 64px; flex: none; font-size: 12px; color: var(--text-3); font-weight: 700; }
+.pg-recap .sr-tl-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--cat); flex: none; }
+.pg-session .ss-nomap ~ .ss-timer-card { margin: 12px 0 0; }
